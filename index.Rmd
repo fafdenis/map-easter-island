@@ -1,0 +1,46 @@
+---
+title: "Visiting Easter Island"
+author: "Stephanie Denis"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+```
+* * *
+
+#### Background
+Easter Island is a Chilean island in the Southeastern Pacific Ocean. It is home to the Rapa Nui National Park, a UNESCO World Heritage site, famous for its large stone statues known as *Moai*, which are believed to have been carved more than five centuries ago.
+
+I was fortunate enough to have recently visited Easter Island and was in awe of its beauty and isolatedness. Seeing these magnificent statues in person was both humbling and unforgettable. I have marked my favorite sites on the map below.
+
+- *Rano Kau* - The volcano's most notable feature is its gigantic crater lake measuring 1.5 Km wide and 300 meter deep. It is one of only 3 natural bodies of fresh water on the island.
+- *Orongo* - Ceremonial village with 54 stone houses on the very top of the crater's left rim.
+- *Ahu Tahai* - Archaeological complex with 3 restored temples. Also a great place to watch the sunset. 
+- *Ahu Akivi* - Ceremonial platform with 7 statues. They are the only ones facing the ocean.
+- *Rano Raraku* - Volcanic cone where nearly all the statues were carved. There are dozens and dozens of statues still around, many showing different carvings. 
+- *Ahu Tongariki* - The largest shrine on the island with 15 large statues. 
+- *Ahu Nau Nau* - A ceremonial platform with 7 statues on the island's main beach. Anakena beach is breathtakingly beautiful with its tall palm trees, soft pink sand and clear blue water, making it an ideal place for relaxing.
+
+#### Source
+https://en.wikipedia.org/wiki/Easter_Island
+
+* * * 
+
+```{r map}
+# Loading libraries
+library(leaflet); library(htmltools)
+
+# Creating dataframe with names and coordinates
+df <- data.frame(name = c("Rano Kau","Ahu Tahai", "Rano Raraku", "Ahu Tongariki",
+                          "Ahu Nau Nau", "Ahu Akivi", "Orongo"),
+                        lat = c(-27.1833, -27.1402, -27.123889, -27.125833, 
+                               -27.073889, -27.115, -27.189444),
+                        lng = c(-109.4333, -109.4271, -109.286111, -109.276944, 
+                               -109.322778, -109.395, -109.4425))
+
+# Adding markers and labels
+df %>% leaflet() %>% addTiles() %>%
+        addMarkers(df$lng, df$lat, label = htmlEscape(df$name))
+```
